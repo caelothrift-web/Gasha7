@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>پەیمانگای گەشە</title>
+<style>
+:root{--bg:#05080f;--s:#0b111b;--s2:#101927;--bd:#1a2a40;--a:#7dd3fc;--a2:#38bdf8;--t:#e8f2fc;--m:#8ba3bd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{color-scheme:dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(56,189,248,.18),transparent),radial-gradient(700px 400px at 0% 100%,rgba(125,211,252,.08),transparent),var(--bg);color:var(--t);font-family:"Noto Naskh Arabic","Segoe UI",Tahoma,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(5,8,15,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.brand{font-weight:700;color:var(--a);font-size:19px}
+.back{font:inherit;background:none;border:1px solid var(--bd);color:var(--a);border-radius:10px;padding:6px 14px;cursor:pointer}
+main{max-width:520px;margin:0 auto;padding:18px 16px 40px}
+.hero h1{font-size:30px;margin:10px 0 6px}.hero p{color:var(--m);margin:0;line-height:1.8}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.tile{background:linear-gradient(160deg,var(--s2),var(--s));border:1px solid var(--bd);border-radius:18px;padding:16px 14px;text-align:right;color:var(--t);font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:.2s}
+.tile:hover{border-color:var(--a2);box-shadow:0 8px 30px rgba(56,189,248,.18);transform:translateY(-2px)}
+.tile b{font-size:17px}.tile small{color:var(--m);font-size:13px;line-height:1.6}
+.ic{font-size:26px;width:46px;height:46px;border-radius:12px;background:rgba(56,189,248,.12);display:grid;place-items:center}
+.panel{background:linear-gradient(160deg,var(--s2),var(--s));border:1px solid var(--bd);border-radius:22px;padding:22px 18px;text-align:center}
+h2{margin:6px 0;font-size:24px}
+.sub{color:var(--m);line-height:1.8;margin:4px 0 14px;min-height:24px}
+.muted{color:var(--m);font-size:14px;margin-top:12px;min-height:20px}
+.btn{font:inherit;font-size:18px;border:0;border-radius:12px;padding:12px 22px;background:linear-gradient(135deg,var(--a),var(--a2));color:#04121e;font-weight:700;cursor:pointer;touch-action:manipulation;transition:transform .1s,left .18s,top .18s}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;color:var(--a);border:1px solid var(--bd)}
+.chip{display:inline-block;background:rgba(56,189,248,.1);border:1px solid var(--bd);color:var(--a);border-radius:999px;padding:5px 12px;font-size:14px}
+.stats,.meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0 14px}
+.fo{min-height:90px;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1.9}
+.ball{font-size:72px;filter:drop-shadow(0 0 22px rgba(56,189,248,.7));animation:fl 3s ease-in-out infinite;cursor:pointer;display:inline-block}
+@keyframes fl{50%{transform:translateY(-9px)}}
+.slot{min-height:60px;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+#b1.run{position:fixed;z-index:20}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+.mc{aspect-ratio:1;border-radius:12px;border:1px solid var(--bd);background:var(--s);font-size:28px;cursor:pointer;color:var(--t);position:relative;padding:0}
+.mc span{opacity:0;transition:.2s}
+.mc::after{content:'?';position:absolute;inset:0;display:grid;place-items:center;color:var(--a2);font-size:22px;opacity:.6}
+.mc.open,.mc.done{background:rgba(56,189,248,.14);border-color:var(--a2)}
+.mc.open span,.mc.done span{opacity:1}.mc.open::after,.mc.done::after{opacity:0}
+.rbox{height:200px;border-radius:16px;display:grid;place-items:center;font-size:20px;line-height:1.8;cursor:pointer;border:1px solid var(--bd);background:var(--s);margin:12px 0;padding:10px;user-select:none}
+.rbox.wait{background:#0f1c2e;color:var(--m)}.rbox.go{background:var(--a2);color:#04121e;font-weight:700}.rbox.bad{background:#2a1218;color:#fca5a5}
+input{font:inherit;font-size:20px;width:130px;text-align:center;direction:ltr;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--s);color:var(--t);margin-inline-end:8px}
+input:focus{outline:2px solid var(--a2)}
+.xo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:10px auto 14px}
+.xc{aspect-ratio:1;font-size:40px;border-radius:12px;border:1px solid var(--bd);background:var(--s);color:var(--a);cursor:pointer;font-family:Arial,sans-serif;padding:0}
+.xc.o{color:#fff}
+.opt{display:block;width:100%;margin:8px 0;padding:13px;border-radius:12px;border:1px solid var(--bd);background:var(--s);color:var(--t);font:inherit;font-size:17px;cursor:pointer;text-align:right}
+.opt.ok{background:rgba(34,197,94,.18);border-color:#22c55e}.opt.no{background:rgba(239,68,68,.18);border-color:#ef4444}
+.bar{height:6px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--a2);transition:width .3s}
+footer{text-align:center;color:var(--m);font-size:13px;margin-top:26px}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:30}
+.brand{display:flex;align-items:center;gap:10px}.brand span{line-height:1.3;font-size:16px}.brand small{display:block;color:var(--m);font-weight:400;font-size:12px}
+.gc{position:static;inset:auto;pointer-events:auto;z-index:auto;width:min(100%,300px);aspect-ratio:1;border:1px solid var(--bd);border-radius:14px;background:var(--s);touch-action:none;display:block;margin:0 auto 12px}
+.dp{display:grid;grid-template-columns:repeat(3,56px);gap:6px;justify-content:center;margin:0 0 12px;direction:ltr}.dp button{font-size:20px;padding:10px;border-radius:12px;border:1px solid var(--bd);background:var(--s);color:var(--a);cursor:pointer}
+.tbox{position:relative;height:260px;border:1px solid var(--bd);border-radius:16px;background:var(--s);margin:10px 0;overflow:hidden}
+.dot{position:absolute;width:54px;height:54px;border-radius:50%;border:0;background:radial-gradient(circle,#fff,var(--a2));box-shadow:0 0 18px var(--a2);cursor:pointer;padding:0}
+.ex{margin-top:12px;padding:12px;border-radius:12px;background:rgba(56,189,248,.08);border:1px solid var(--bd);line-height:1.8;text-align:right}
+
+body{background-color:#04070d;background-image:linear-gradient(rgba(125,211,252,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.045) 1px,transparent 1px);background-size:38px 38px}
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(100px);pointer-events:none}
+body::before{width:540px;height:540px;top:-180px;right:-140px;background:#0ea5e9;opacity:.42;animation:dr 18s ease-in-out infinite alternate}
+body::after{width:480px;height:480px;bottom:-160px;left:-140px;background:#84cc16;opacity:.16;animation:dr 23s ease-in-out infinite alternate-reverse}
+@keyframes dr{to{transform:translate(70px,60px) scale(1.18)}}
+header{background:rgba(4,7,13,.78);border-bottom:1px solid rgba(125,211,252,.18)}
+.brand img{height:44px;width:auto;border-radius:12px;background:#fff;box-shadow:0 0 18px rgba(56,189,248,.45)}
+.brand span{font-size:18px;font-weight:800;background:linear-gradient(90deg,#e0f2fe,#7dd3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{-webkit-text-fill-color:var(--m)}
+.hero{text-align:center;padding:8px 0 2px}
+.logo-card{display:inline-block;background:#fff;border-radius:28px;padding:12px 20px;box-shadow:0 0 0 1px rgba(255,255,255,.5),0 24px 70px rgba(14,165,233,.4);animation:fl 5s ease-in-out infinite}
+.logo-card img{display:block;height:150px;width:auto}
+.hero h1{font-size:36px;margin:20px 0 6px;background:linear-gradient(90deg,#e0f2fe,#38bdf8,#fde047);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--m);margin:0 0 12px}
+.tile,.panel{border:1px solid transparent;background:linear-gradient(160deg,#0f1a2b,#0a111c) padding-box,linear-gradient(135deg,rgba(125,211,252,.6),rgba(56,189,248,.12) 45%,rgba(132,204,22,.35)) border-box;box-shadow:0 10px 36px rgba(0,0,0,.45)}
+.tile{animation:up .55s both;position:relative;overflow:hidden}
+.tile::after{content:"";position:absolute;inset:0;background:radial-gradient(220px 120px at 80% 0%,rgba(56,189,248,.18),transparent);opacity:0;transition:.3s}
+.tile:hover::after{opacity:1}
+.tile:nth-child(2){animation-delay:.05s}.tile:nth-child(3){animation-delay:.1s}.tile:nth-child(4){animation-delay:.15s}.tile:nth-child(5){animation-delay:.2s}.tile:nth-child(6){animation-delay:.25s}.tile:nth-child(7){animation-delay:.3s}.tile:nth-child(8){animation-delay:.35s}.tile:nth-child(9){animation-delay:.4s}.tile:nth-child(10){animation-delay:.45s}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.ic{background:linear-gradient(135deg,rgba(56,189,248,.25),rgba(132,204,22,.12));box-shadow:inset 0 0 0 1px rgba(125,211,252,.25)}
+.btn{background:linear-gradient(135deg,#bae6fd,#38bdf8 55%,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,.4)}
+.btn.ghost{box-shadow:none;background:rgba(56,189,248,.06)}
+h2{background:linear-gradient(90deg,#fff,#bae6fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.opt:hover{border-color:var(--a2);background:rgba(56,189,248,.08)}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--bd)}
+.bl{position:absolute;bottom:-60px;font-size:46px;background:none;border:0;padding:0;cursor:pointer;animation:rise 4s linear forwards}
+@keyframes rise{to{transform:translateY(-340px)}}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<header><button class="back" id="back" hidden>→ گەڕانەوە</button><div class="brand"><img src="data:image/png;base64,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" alt="GASHA" width="44" height="46"><span>پەیمانگای گەشە<small>مەرحەلەی دوو · فاڵ و یاری</small></span></div></header>
+<main id="app"></main>
+<script>
+(function(){
+const $=s=>document.querySelector(s),app=$('#app'),back=$('#back');
+const ar=s=>String(s).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const rnd=n=>Math.floor(Math.random()*n);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const st={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const buzz=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+let view=0,tm;
+function go(fn){view++;clearTimeout(tm);window.scrollTo(0,0);fn();back.hidden=fn===home}
+back.onclick=()=>go(home);
+
+const G=[['🔮','فاڵی ئەمڕۆ','بزانە ئەمڕۆ چی چاوەڕێتە',fortune],
+['🧠','یاری بیرهێنانەوە','جووتە وێنەکان بدۆزەرەوە',memory],
+['⚡','خێرایی کاردانەوە','بزانە چەند خێرایت',reaction],
+['🔢','حەدسی ژمارە','ژمارەی شاراوە بدۆزەرەوە',guess],
+['⭕','ئێکس و ئۆ','لەگەڵ کۆمپیوتەر یاری بکە',xo],
+['📚','کویزی دەرسەکان','١٠ دەرس، پرسیار و شەرح',quiz],
+['🐍','یاری مار','بخۆ و گەورە ببە',snake],
+['🎯','یاری ئامانج','لە ٢٠ چرکەدا چەند دەگریت',target],
+['➕','بیرکاری خێرا','٣٠ چرکە، زۆرترین وەڵام',mathgame],
+['🎵','سایمۆن','ڕیزی ڕەنگەکان وەبیر بێنەوە',simon],
+['🐹','مشک بکوتە','خێرا بیکوتە',mole],
+['🎨','ڕەنگ نەک وشە','مێشکت تاقی بکەرەوە',stroop],
+['✂️','بەرد، کاغەز، مقەست','لەگەڵ کۆمپیوتەر',rps],
+['🎲','زار و پارە','بەختی خۆت تاقی بکەرەوە',dice],
+['🔤','وشەی تێکچوو','پیتەکان ڕێک بخەرەوە',scram],
+['🧮','بیرهێنانەوەی ژمارە','ژمارەکە وەبیر بێنەوە',nmem],
+['🧩','پازڵی ژمارە','ژمارەکان ڕێک بخە',slide],
+['🃏','زیاتر یان کەمتر','ژمارەی دواتر بزانە',hilo],
+['💡','چراکان','هەموو چراکان بکوژێنەوە',lights],
+['🖱️','خێرایی کلیک','لە ١٠ چرکەدا چەند؟',cps],
+['⌨️','خێرایی نووسین','ڕستەکە بە خێرایی بنووسە',typing],
+['🎈','پەلەهەوا','بیانتەقێنە',balloon],
+['🔍','جیاوازەکە بدۆزەرەوە','ئیمۆجی جیاواز بدۆزەرەوە',odd],
+['✅','ڕاستە یان هەڵە','هاوکێشەکە بپشکنە',tf]];
+
+function home(){
+  app.innerHTML=`<section class="hero"><div class="logo-card"><img src="data:image/png;base64,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" alt="GASHA Institute"></div><h1>پەیمانگای گەشە</h1><p>فاڵ، یاری و کویزی دەرسەکانی مەرحەلەی دوو</p><div class="stats"><span class="chip">📚 ١٠ دەرس</span><span class="chip">❓ +٥٠ پرسیار بۆ هەر دەرسێک</span><span class="chip">🎮 ٢٢ یاری</span></div></section><div class="grid">${G.map((g,i)=>`<button class="tile" data-i="${i}"><span class="ic">${g[0]}</span><b>${g[1]}</b><small>${g[2]}</small></button>`).join('')}</div><footer>پەیمانگای گەشە · هەولێر</footer>`;
+  app.querySelectorAll('.tile').forEach(t=>t.onclick=()=>go(G[t.dataset.i][3]));
+}
+
+/* ---------- فاڵ ---------- */
+function fortune(){
+  const F=[["ئەمڕۆ ڕۆژێکی باش دەبێت؛ بە بزەیەکەوە دەست پێبکە.","ڕۆژ"],
+  ["شتێکی خۆش لە ڕێگایە، تەنها کەمێک ئارام بگرە.","ڕۆژ"],
+  ["کەمێک پشوو بدە و چایەک بخۆرەوە؛ دواتر کارەکانت ئاسانتر دەبن.","ڕۆژ"],
+  ["تۆ لەوەی گومان دەبەیت زیرەکتریت.","ڕۆژ"],
+  ["ئەگەر کۆدەکەت کاری نەکرد، دڵگران مەبە؛ هەموو پرۆگرامنووسێک ئەم ڕۆژانەی بینیوە.","کۆدکردن"],
+  ["ئەمڕۆ هەڵەیەک لە پرۆگرامەکەت دەدۆزیتەوە و هاوپۆلەکانت سوپاست دەکەن.","کۆدکردن"],
+  ["هاوڕێیەکت بیرت دەکاتەوە، پەیوەندیی پێوە بکە.","هاوڕێیەتی"],
+  ["ئەمڕۆ هاوڕێیەکی نوێ لە پۆلەکەتدا پەیدا دەکەیت.","هاوڕێیەتی"],
+  ["ئەگەر ئەمڕۆ بخوێنیت، سبەینێ نمرەیەکی باشت دەبێت.","خوێندن"],
+  ["مامۆستاکەت ئەمڕۆ پرسیارێکت لێ دەکات و وەڵامەکەی دەزانیت.","خوێندن"]];
+  const C=[["سوور","#ef4444"],["شین","#3b82f6"],["سەوز","#22c55e"],["زەرد","#facc15"],["مۆر","#8b5cf6"],["پرتەقاڵی","#f97316"],["پەمەیی","#ec4899"]];
+  const T=["نەتگرتم!","نزیک بوویت، بەڵام نەتگرتم.","خێراتر بجووڵێ!","من کۆمپیوتەرم، لە تۆ خێراترم.","تەنها یەک هەوڵی تر ماوە!"];
+  const MAX=5;let count=0,last=-1,seen=0,hit=0,typ,cur='';
+  app.innerHTML=`<div class="panel"><div class="ball" id="ball">🔮</div><h2>فاڵی ئەمڕۆ</h2><p class="sub" id="sub">دەتوانیت دوگمەکە بگریت؟ هەوڵ بدە!</p><div class="fo" id="fo">✨</div><div class="meta" id="meta"></div><div class="slot"><button class="btn" id="b1">فاڵەکەم پیشان بدە</button><button class="btn" id="b2" hidden>فاڵێکی تر</button><button class="btn ghost" id="b3" hidden>ناردن بۆ هاوڕێیەک</button></div><div class="muted" id="cn"></div></div>`;
+  const b1=$('#b1'),b2=$('#b2'),b3=$('#b3'),fo=$('#fo'),sub=$('#sub'),cn=$('#cn'),meta=$('#meta'),ball=$('#ball');
+  function dodge(e){
+    if(count>=MAX)return;const n=Date.now();if(n-hit<300)return;hit=n;
+    if(e.preventDefault)e.preventDefault();count++;buzz(40);
+    if(count<MAX){
+      b1.classList.add('run');
+      const w=innerWidth-b1.offsetWidth-16,h=innerHeight-b1.offsetHeight-16;
+      b1.style.left=(8+Math.random()*Math.max(w,0))+'px';b1.style.top=(8+Math.random()*Math.max(h,0))+'px';
+      b1.style.transform='scale('+(1-count*.06)+')';
+      sub.textContent=T[count-1];cn.textContent='هەوڵی '+ar(count)+' لە '+ar(MAX);
+    }else{
+      b1.classList.remove('run');b1.style.left=b1.style.top=b1.style.transform='';
+      b1.textContent='ئێستا کلیکم لێ بکە';sub.textContent='باشە، تەسلیم بووم!';cn.textContent='';
+    }
+  }
+  b1.addEventListener('pointerenter',dodge);b1.addEventListener('pointerdown',dodge);
+  function pick(){
+    let i;do{i=rnd(F.length)}while(i===last);last=i;cur=F[i][0];seen++;
+    const c=C[rnd(C.length)],a=Array.from(cur);let k=0;fo.textContent='';clearInterval(typ);
+    typ=setInterval(()=>{fo.textContent+=a[k++];if(k>=a.length)clearInterval(typ)},32);
+    meta.innerHTML=`<span class="chip">بەش: ${F[i][1]}</span><span class="chip">ژمارەی بەخت: ${ar(1+rnd(99))}</span><span class="chip">ڕەنگی بەخت: ${c[0]} <span style="color:${c[1]}">●</span></span>`;
+    cn.textContent='ئەمڕۆ '+ar(seen)+' فاڵت بینیوە';confetti();buzz([50,30,50]);
+  }
+  b1.onclick=()=>{if(count<MAX)return;b1.hidden=true;b2.hidden=b3.hidden=false;sub.textContent='ئافەرین، بردتەوە!';pick()};
+  b2.onclick=pick;
+  ball.onclick=()=>buzz(30);
+  b3.onclick=()=>{const t='فاڵی ئەمڕۆم: '+cur+'\n'+location.href;
+    try{if(navigator.share){navigator.share({text:t});return}}catch(e){}
+    try{navigator.clipboard.writeText(t);b3.textContent='کۆپی کرا ✓'}catch(e){b3.textContent='کۆپی نەکرا'}};
+}
+
+/* ---------- بیرهێنانەوە ---------- */
+function memory(){
+  const E=['💻','🖥️','⌨️','🖱️','💾','📡','🔌','🧠'],deck=sh([...E,...E]);
+  let pk=[],moves=0,found=0,lock=false;const best=st.get('mem');
+  app.innerHTML=`<div class="panel"><h2>یاری بیرهێنانەوە</h2><p class="sub">جووتە وێنەکان بدۆزەرەوە، بە کەمترین هەنگاو.</p><div class="stats"><span class="chip" id="m1">هەنگاو: ٠</span><span class="chip" id="m2">جووت: ٠ لە ٨</span><span class="chip" id="m3">باشترین: ${best?ar(best):'—'}</span></div><div class="mem">${deck.map((e,i)=>`<button class="mc" data-i="${i}"><span>${e}</span></button>`).join('')}</div><button class="btn ghost" id="rs">دەستپێکردنەوە</button><p class="sub" id="ms"></p></div>`;
+  const cs=app.querySelectorAll('.mc');
+  cs.forEach((c,i)=>c.onclick=()=>{
+    if(lock||c.classList.contains('open')||c.classList.contains('done'))return;
+    c.classList.add('open');pk.push(i);buzz(15);
+    if(pk.length<2)return;
+    moves++;$('#m1').textContent='هەنگاو: '+ar(moves);
+    const[a,b]=pk;
+    if(deck[a]===deck[b]){
+      cs[a].className=cs[b].className='mc done';pk=[];found++;$('#m2').textContent='جووت: '+ar(found)+' لە ٨';
+      if(found===8){
+        $('#ms').textContent='ئافەرین! لە '+ar(moves)+' هەنگاودا تەواوت کرد.';confetti();
+        if(!best||moves<+best){st.set('mem',moves);$('#m3').textContent='باشترین: '+ar(moves)}
+      }
+    }else{lock=true;tm=setTimeout(()=>{cs[a].classList.remove('open');cs[b].classList.remove('open');pk=[];lock=false},800)}
+  });
+  $('#rs').onclick=()=>go(memory);
+}
+
+/* ---------- خێرایی ---------- */
+function reaction(){
+  let s='idle',t0=0,last='—';const best=st.get('rx');
+  app.innerHTML=`<div class="panel"><h2>خێرایی کاردانەوە</h2><p class="sub">کاتێک ڕەنگی سندوقەکە گۆڕا، بە خێرایی کلیک بکە.</p><div class="stats"><span class="chip" id="r1">دوایین کات: —</span><span class="chip" id="r2">باشترین: ${best?ar(best)+' م.چ':'—'}</span></div><div class="rbox" id="rb">بۆ دەستپێکردن کلیک بکە</div></div>`;
+  const rb=$('#rb');
+  rb.onclick=()=>{
+    if(s==='idle'){s='wait';rb.className='rbox wait';rb.textContent='چاوەڕێ بکە... کاتێک ڕەنگەکە گۆڕا کلیک بکە';
+      tm=setTimeout(()=>{s='go';rb.className='rbox go';rb.textContent='ئێستا کلیک بکە!';t0=performance.now()},1000+Math.random()*2500)}
+    else if(s==='wait'){clearTimeout(tm);s='idle';rb.className='rbox bad';rb.textContent='زوو کلیکت کرد! بۆ دووبارە هەوڵدانەوە کلیک بکە.'}
+    else{const ms=Math.round(performance.now()-t0);s='idle';rb.className='rbox';
+      rb.textContent='کاتەکەت '+ar(ms)+' میلیچرکەیە. بۆ دووبارەکردنەوە کلیک بکە.';$('#r1').textContent='دوایین کات: '+ar(ms);
+      const b=st.get('rx');if(!b||ms<+b){st.set('rx',ms);$('#r2').textContent='باشترین: '+ar(ms)+' م.چ';confetti()}}
+  };
+}
+
+/* ---------- حەدسی ژمارە ---------- */
+function guess(){
+  const n=1+rnd(100);let tries=0,done=false;const best=st.get('gs');
+  app.innerHTML=`<div class="panel"><h2>حەدسی ژمارە</h2><p class="sub">ژمارەیەکم لە ١ تا ١٠٠ هەڵبژاردووە. دەتوانیت بیدۆزیتەوە؟</p><div class="stats"><span class="chip" id="g1">هەوڵەکان: ٠</span><span class="chip">باشترین: ${best?ar(best)+' هەوڵ':'—'}</span></div><div><input id="gi" type="number" inputmode="numeric" min="1" max="100" placeholder="١ - ١٠٠"><button class="btn" id="gb">پشکنین</button></div><p class="sub" id="gm" style="margin-top:16px"></p><button class="btn ghost" id="gr">یاری نوێ</button></div>`;
+  const gi=$('#gi'),gm=$('#gm');
+  function chk(){
+    if(done)return;const v=parseInt(gi.value,10);
+    if(!(v>=1&&v<=100)){gm.textContent='تکایە ژمارەیەک لە ١ تا ١٠٠ بنووسە.';return}
+    tries++;$('#g1').textContent='هەوڵەکان: '+ar(tries);gi.value='';
+    if(v===n){done=true;gm.textContent='دروستە! ژمارەکە '+ar(n)+' بوو و لە '+ar(tries)+' هەوڵدا دۆزیتەوە.';confetti();
+      if(!best||tries<+best)st.set('gs',tries)}
+    else gm.textContent=v<n?'ژمارەکە لە '+ar(v)+' گەورەترە.':'ژمارەکە لە '+ar(v)+' بچووکترە.';
+  }
+  $('#gb').onclick=chk;gi.onkeydown=e=>{if(e.key==='Enter')chk()};$('#gr').onclick=()=>go(guess);
+}
+
+/* ---------- ئێکس و ئۆ ---------- */
+const sc={w:0,l:0,d:0};
+const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const win=b=>{for(const[x,y,z]of L)if(b[x]&&b[x]===b[y]&&b[x]===b[z])return b[x];return b.every(Boolean)?'d':null};
+function ai(b){
+  const f=p=>{for(const l of L){const v=l.map(i=>b[i]);if(v.filter(c=>c===p).length===2&&v.includes(''))return l[v.indexOf('')]}return -1};
+  let m=f('O');if(m<0)m=f('X');if(m<0&&!b[4])m=4;
+  if(m<0){const e=[0,2,6,8].filter(i=>!b[i]);if(e.length)m=e[rnd(e.length)]}
+  if(m<0){const e=b.map((c,i)=>c?-1:i).filter(i=>i>=0);m=e[rnd(e.length)]}return m;
+}
+function xo(){
+  const v=view;let b=Array(9).fill(''),over=false,turn=true;
+  app.innerHTML=`<div class="panel"><h2>ئێکس و ئۆ</h2><p class="sub" id="xs">نۆرەی تۆیە، تۆ X ی.</p><div class="stats"><span class="chip" id="x1"></span></div><div class="xo">${b.map((_,i)=>`<button class="xc" data-i="${i}"></button>`).join('')}</div><button class="btn ghost" id="xr">یاری نوێ</button></div>`;
+  const cs=app.querySelectorAll('.xc'),msg=t=>$('#xs').textContent=t;
+  const tally=()=>$('#x1').textContent=`تۆ: ${ar(sc.w)} | کۆمپیوتەر: ${ar(sc.l)} | یەکسان: ${ar(sc.d)}`;tally();
+  const draw=()=>cs.forEach((c,i)=>{c.textContent=b[i];c.classList.toggle('o',b[i]==='O')});
+  function end(r){over=true;
+    if(r==='X'){sc.w++;msg('تۆ بردتەوە!');confetti()}else if(r==='O'){sc.l++;msg('کۆمپیوتەر بردیەوە. دووبارە هەوڵ بدەوە!')}else{sc.d++;msg('یەکسان بوو.')}tally()}
+  cs.forEach((c,i)=>c.onclick=()=>{
+    if(over||!turn||b[i])return;b[i]='X';draw();let r=win(b);if(r)return end(r);
+    turn=false;msg('کۆمپیوتەر بیر دەکاتەوە...');
+    tm=setTimeout(()=>{if(v!==view)return;b[ai(b)]='O';draw();r=win(b);if(r)return end(r);turn=true;msg('نۆرەی تۆیە.')},500);
+  });
+  $('#xr').onclick=()=>go(xo);
+}
+
+/* ---------- کویز ---------- */
+function quizOld(){
+  const Q=sh([
+  ["CPU واتە چی؟",["بیرگەی کاتی","پرۆسێسەری ناوەندی","کارتی وێنە","دایکبۆرد"],1],
+  ["کامیان زمانی دروستکردنی لاپەڕەی ئینتەرنێتە؟",["Excel","Photoshop","HTML","Windows"],2],
+  ["RAM بۆ چی بەکاردێت؟",["پاراستنی هەمیشەیی فایلەکان","هەڵگرتنی کاتیی زانیاری لە کاتی کارکردن","پیشاندانی وێنە","پەیوەندی بە ئینتەرنێت"],1],
+  ["ژمارەکانی ٠ و ١ لە کام سیستەمدا بەکاردێن؟",["دەیی","هەشتی","شازدەیی","دووانی (Binary)"],3],
+  ["کامیان ئامرازی دەرخستنە (Output)؟",["کیبۆرد","شاشە","مائووس","سکانەر"],1],
+  ["پاسۆردی بەهێز چۆن دەبێت؟",["ناوی خۆت","١٢٣٤٥٦","درێژ و تێکەڵ لە پیت و ژمارە و هێما","بەرواری لەدایکبوون"],2]]);
+  const v=view;let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const b=st.get('qz');if(!b||score>+b)st.set('qz',score);if(score>=5)confetti();
+      app.innerHTML=`<div class="panel"><h2>کۆتایی کویز</h2><p class="sub" style="font-size:22px">نمرەکەت ${ar(score)} لە ${ar(Q.length)}</p><p class="sub">${score>=5?'نایاب! تۆ زۆر شارەزایت.':score>=3?'باشە، بەڵام دەتوانیت باشتر بیت.':'دووبارە هەوڵ بدەوە، دەتوانیت!'}</p><button class="btn" id="qr">دووبارە</button></div>`;
+      $('#qr').onclick=()=>go(quiz);return}
+    const q=Q[i];
+    app.innerHTML=`<div class="panel"><div class="bar"><i style="width:${i/Q.length*100}%"></i></div><p class="muted">پرسیاری ${ar(i+1)} لە ${ar(Q.length)}</p><h2 style="font-size:20px;line-height:1.8">${q[0]}</h2>${q[1].map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div>`;
+    const os=app.querySelectorAll('.opt');let lk=false;
+    os.forEach((o,k)=>o.onclick=()=>{if(lk)return;lk=true;
+      if(k===q[2]){score++;o.classList.add('ok');buzz(30)}else{o.classList.add('no');os[q[2]].classList.add('ok')}
+      tm=setTimeout(()=>{if(v===view){i++;show()}},900)});
+  }
+  show();
+}
+
+/* ---------- کویزی دەرسەکان ---------- */
+const SUB=[['🗄️','داتابەیس'],['📊','پرێزێنتەیشن'],['⚛️','فیزیا'],['➗','بیرکاری'],['📝','کوردی'],['🔤','ئینگلیزی'],['📖','عەرەبی'],['🕌','ئایین'],['🎬','مەڵتیمیدیا'],['📈','سپریدشیت']];
+/* فۆرمات: پرسیار|وەڵام١|وەڵام٢|وەڵام٣|وەڵام٤|ژمارەی وەڵامی دروست (٠-٣)|شەرح */
+const QB=[
+["کورتکراوەی SQL چییە؟|Structured Query Language|Simple Question List|Stored Quick Link|System Query Log|0|SQL زمانی ستانداردە بۆ کارکردن لەگەڵ داتابەیس و واتای Structured Query Language ە.",
+"لە خشتەی داتابەیسدا هەر ڕیزێک پێی دەگوترێت چی؟|Field|Record|Table|Key|1|هەر ڕیزێک یەک تۆمار (Record) پیشان دەدات، و هەر ستوونێک یەک خانە (Field)ە.",
+"کلیلی بنەڕەتی (Primary Key) چییە؟|بەهایەک کە دووبارە دەبێتەوە|بەهایەکی تایبەت بۆ هەر تۆمارێک|تەنها ناوی خشتەکە|وێنەیەک|1|Primary Key هەر تۆمارێک بە شێوەیەکی تایبەت دیاری دەکات و دووبارە نابێتەوە.",
+"کام فەرمان بۆ هێنانەوەی زانیاری لە خشتەیەک بەکاردێت؟|INSERT|DELETE|SELECT|UPDATE|2|SELECT بۆ خوێندنەوە و هێنانەوەی داتایە، INSERT زیادکردن و DELETE سڕینەوە."],
+["کورتەڕێی دەستپێکردنی پێشاندان لە یەکەم سلایدەوە لە PowerPoint کامەیە؟|F5|F1|F12|Ctrl+P|0|F5 پێشاندان لە سەرەتاوە دەست پێدەکات، و Shift+F5 لە سلایدی ئێستاوە.",
+"Transition لە پرێزێنتەیشندا واتە چی؟|جۆری فۆنت|کاریگەری گواستنەوە لە سلایدێکەوە بۆ سلایدێکی تر|ڕەنگی باکگراوند|چاپکردن|1|Transition ئەو کاریگەرییەیە کە لە کاتی گۆڕینی سلایدەکان پیشان دەدرێت.",
+"کام بەش شێوازی هاوبەش بۆ هەموو سلایدەکان دیاری دەکات؟|Slide Master|Spell Check|Print Preview|Notes|0|Slide Master بۆ دیزاینی هاوبەشی هەموو سلایدەکان بەکاردێت.",
+"فایلی PowerPoint بە شێوەی ستاندارد چ پاشگرێکی هەیە؟|.docx|.xlsx|.pptx|.mp3|2|.pptx پاشگری PowerPoint ە، .docx بۆ Word و .xlsx بۆ Excel."],
+["یەکەی هێز لە سیستەمی SI چییە؟|جوول|نیوتن|واتا|ئامپێر|1|هێز بە نیوتن (N) دەپێورێت.",
+"یاسای ئۆم کامەیە؟|V = I × R|V = I ÷ R|V = I + R|V = R ÷ I|0|ڤۆڵتیەت یەکسانە بە شەپۆڵی کارەبا (I) لێکدراو لە بەرگری (R).",
+"خێرایی چۆن دەدۆزرێتەوە؟|مەودا ÷ کات|کات ÷ مەودا|مەودا × کات|هێز ÷ کێش|0|خێرایی = مەودا دابەش بە کات.",
+"خێرایی ڕووناکی لە بۆشاییدا نزیکەی چەندە؟|٣٠٠ کم/چ|٣٠٬٠٠٠ کم/چ|٣٠٠٬٠٠٠ کم/چ|٣ ملیۆن کم/چ|2|ڕووناکی نزیکەی ٣٠٠ هەزار کیلۆمەتر لە چرکەیەکدا دەڕوات."],
+["ئەنجامی ٢ بە توانی ٣ (٢³) چەندە؟|٦|٨|٩|١٢|1|٢ × ٢ × ٢ = ٨.",
+"ڕەگی دووەمی ١٤٤ چەندە؟|١٢|١٤|١٦|١٨|0|چونکە ١٢ × ١٢ = ١٤٤.",
+"بەهای x لە 2x + 6 = 14 چەندە؟|٣|٤|٥|٦|1|٦ بۆ لای ڕاست دەبەین: 2x = 8، دواتر x = 4.",
+"یاسای ڕووبەری بازنە کامەیە؟|2πr|πr²|πr|2r²|1|ڕووبەر πr²ە، و 2πr بۆ دەوری بازنەیە."],
+["کام وشە ناوە؟|دەنووسم|خوێندکار|خێرا|لەگەڵ|1|خوێندکار ناوی کەسێکە، بۆیە ناوە.",
+"کام ڕستە دروستە؟|من بۆ پۆل دەچم|دەچم من پۆل بۆ|پۆل دەچم بۆ من|بۆ دەچم پۆل من|0|لە ڕستەی کوردیدا کردار زۆرجار لە کۆتاییدا دێت.",
+"دژەواتای وشەی «درێژ» کامەیە؟|بەرز|کورت|پان|گەورە|1|کورت دژەواتای درێژە.",
+"پاشگری کۆ لە «خوێندکار» بۆ «خوێندکاران» کامەیە؟|ان|ێک|ەکە|تر|0|پاشگری «ان» ناو بە کۆ دەکات."],
+["Choose the correct word: She ___ to school every day.|go|goes|going|gone|1|لەگەڵ he / she / it لە Present Simple پیتی s یان es زیاد دەکەین.",
+"What is the past simple of the verb write?|writed|wrote|written|writing|1|wrote کاتی ڕابردووە و written کاتی Past Participle ە.",
+"What is the opposite of difficult?|hard|easy|big|slow|1|easy واتە ئاسان و دژی difficult ە.",
+"Choose the correct word: I have ___ apple.|a|an|the|two|1|پێش وشەیەک کە بە دەنگی بزوێن دەست پێدەکات an بەکاردێت."],
+["ما جمع كلمة «كتاب»؟|كتابات|كتب|كتّاب|مكتبة|1|جمع التكسير لكلمة كتاب هو كتب.",
+"ما الفاعل في جملة «كتبَ الطالبُ الدرسَ»؟|الدرس|الطالب|كتب|لا يوجد|1|الفاعل هو من قام بالفعل، وهنا الطالب.",
+"ما ضد كلمة «كبير»؟|طويل|صغير|قوي|جميل|1|ضد كبير هو صغير.",
+"ما الفعل الماضي من «يكتب»؟|كتب|اكتب|كاتب|مكتوب|0|الماضي من يكتب هو كتب."],
+["ستوونەکانی ئیسلام چەند دانەن؟|٣|٤|٥|٦|2|پێنج: شەهادەتەین، نوێژ، زەکات، ڕۆژوو و حەج.",
+"ڕۆژووی ڕەمەزان لە کام مانگی کۆچییە؟|نۆیەم|یەکەم|دووەم|دوازدەیەم|0|ڕەمەزان مانگی نۆیەمی ساڵی کۆچییە.",
+"ژمارەی نوێژە فەرزەکانی ڕۆژانە چەندە؟|٣|٤|٥|٦|2|بەیانی، نیوەڕۆ، عەسر، ئێوارە و شەو.",
+"یەکەم سوورەتی قورئان چییە؟|بەقەرە|فاتیحە|ناس|ئیخلاس|1|سوورەتی فاتیحە لە سەرەتای قورئانە."],
+["کامیان فۆرماتی وێنەی ڕاستەقینە (Raster)ە؟|SVG|JPG|AI|EPS|1|JPG لە پیکسێل پێکهاتووە، بەڵام SVG ڤێکتەرە.",
+"مۆدێلی RGB بۆ چی بەکاردێت؟|چاپکردن|ڕەنگی شاشە|دەنگ|فایلی دەق|1|RGB واتە سوور، سەوز و شین و بۆ شاشە بەکاردێت.",
+"فۆرماتی MP3 بۆ چ جۆرە فایلێکە؟|وێنە|دەنگ|دەق|بەرنامە|1|MP3 فۆرماتی دەنگە.",
+"FPS لە ڤیدیۆدا واتە چی؟|ژمارەی فرەیم لە چرکەیەکدا|قەبارەی فایل|ڕەزۆڵووشن|دەنگ|0|FPS واتە Frames Per Second."],
+["فۆرمولی کۆکردنەوەی خانەکانی A1 تا A5 کامەیە؟|=SUM(A1:A5)|=ADD(A1,A5)|=TOTAL(A1-A5)|=PLUS(A1:A5)|0|SUM بۆ کۆکردنەوە بەکاردێت و : مەودایەک دیاری دەکات.",
+"هەر فۆرمولایەک لە Excel بە چ هێمایەک دەست پێدەکات؟|#|=|@|$|1|هێمای = پێش هەموو فۆرمولایەک دادەنرێت.",
+"فەرمانی AVERAGE چی دەکات؟|کۆ دەکاتەوە|تێکڕا دەدۆزێتەوە|زۆرترین دەدۆزێتەوە|دەیانژمێرێت|1|AVERAGE تێکڕای ژمارەکان دەدات.",
+"ناونیشانی خانەی ستوونی B و ڕیزی ٣ کامەیە؟|3B|B3|B-3|BB3|1|ناونیشان لە ناوی ستوون و ژمارەی ڕیز پێکدێت، واتە B3."]
+];
+
+const SETS=[
+/*0 داتابەیس*/[["«{t}» چییە یان چی دەکات؟","کامیان ئەمەیە: «{d}»؟","{t} = {d}.","SELECT|هێنانەوەی داتا لە خشتە;INSERT|زیادکردنی تۆمارێکی نوێ;UPDATE|گۆڕینی داتای تۆمارەکان;DELETE|سڕینەوەی تۆمار;CREATE TABLE|دروستکردنی خشتەی نوێ;DROP TABLE|سڕینەوەی خشتە بە تەواوی;WHERE|دانانی مەرج بۆ فلتەرکردنی داتا;ORDER BY|ڕیزکردنی ئەنجامەکان;GROUP BY|کۆکردنەوەی تۆمارەکان بە گروپ;COUNT|ژماردنی تۆمارەکان;SUM|کۆی بەهاکان;AVG|تێکڕای بەهاکان;MAX|گەورەترین بەها;MIN|بچووکترین بەها;Primary Key|کلیلێکی تایبەت بۆ هەر تۆمارێک;Foreign Key|کلیلێک کە دوو خشتە دەبەستێتەوە;Record|یەک ڕیز لە خشتە;Field|یەک ستوون لە خشتە;DBMS|سیستەمی بەڕێوەبردنی داتابەیس;Query|داواکاری بۆ داتابەیس;Index|خێراکردنی گەڕان لە داتابەیس;Normalization|کەمکردنەوەی دووبارەبوونەوەی داتا;JOIN|بەستنەوەی خشتەکان;DISTINCT|لابردنی بەها دووبارەکان;LIKE|گەڕان بەپێی شێوازێکی دەق"]],
+/*1 پرێزێنتەیشن*/[["«{t}» چییە یان چی دەکات؟","کامیان ئەمەیە: «{d}»؟","{t} = {d}.","F5|دەستپێکردنی پێشاندان لە سەرەتاوە;Shift+F5|دەستپێکردنی پێشاندان لە سلایدی ئێستاوە;Esc|دەرچوون لە پێشاندان;Ctrl+M|زیادکردنی سلایدی نوێ;Ctrl+S|پاشەکەوتکردنی فایل;Ctrl+Z|گەڕانەوە بۆ هەنگاوی پێشوو;Ctrl+C|لەبەرگرتنەوە;Ctrl+V|لکاندن;Ctrl+B|تۆخکردنی نووسین;Ctrl+I|لارکردنی نووسین;Ctrl+U|هێڵ بە ژێر نووسیندا;Slide Master|دیزاینی هاوبەشی هەموو سلایدەکان;Transition|کاریگەری گواستنەوە لە سلایدێکەوە بۆ سلایدێکی تر;Animation|جووڵەی بەشەکانی ناو سلایدەکە;Layout|شێوازی ڕێکخستنی ناوەڕۆکی سلایدەکە;Theme|کۆمەڵە ڕەنگ و فۆنت و دیزاین;Notes|تێبینی بۆ پێشکەشکار;Slide Sorter|بینینی هەموو سلایدەکان بۆ ڕێکخستنەوە;SmartArt|دروستکردنی دیاگرام و هێڵکاری;Hyperlink|بەستەر بۆ لاپەڕە یان فایلێکی تر;Header & Footer|سەرپەڕە و پێپەڕەی سلایدەکان;.pptx|پاشگری فایلی PowerPoint;Presenter View|بینینی تێبینییەکان لە کاتی پێشکەشکردن;Slide|یەک لاپەڕە لە پێشاندانەکە;Placeholder|سنوورێکی ئامادە بۆ دانانی دەق یان وێنە"]],
+/*2 فیزیا*/[["یەکە یان هاوکێشەی «{t}» کامەیە؟","«{d}» پەیوەندی بە کام چەمکەوە هەیە؟","{t} ← {d}","هێز|نیوتن (N);کار یان وزە|جوول (J);توانا|واتا (W);فشار|پاسکاڵ (Pa);ڤۆڵتیەت|ڤۆڵت (V);ڕەوتی کارەبا|ئامپێر (A);بەرگری کارەبایی|ئۆم (Ω);دووبارەبوونەوەی شەپۆڵ|هێرتز (Hz);بارستایی|کیلۆگرام (kg);مەودا|مەتر (m);کات|چرکە (s);پلەی گەرمی لە سیستەمی SI|کێڵڤن (K);بارگەی کارەبایی|کولۆم (C);خێرایی|مەتر لە چرکەیەکدا (m/s);یاسای ئۆم|V = I × R;یاسای دووەمی نیوتن|F = m × a;هاوکێشەی خێرایی|v = مەودا ÷ کات;هاوکێشەی کار|W = F × d;هاوکێشەی توانا|P = W ÷ t;کێش (Weight)|W = m × g;وزەی جووڵە|KE = ½ m v²;هاوکێشەی فشار|P = F ÷ A;چڕی|ρ = m ÷ V;خێرابوون|گۆڕانی خێرایی بەپێی کات (m/s²);خێرابوونی کێشکردنی زەوی|نزیکەی ٩٫٨ m/s²"]],
+/*3 بیرکاری*/null,
+/*4 کوردی*/[["دژەوشەی «{t}» کامەیە؟","«{d}» دژەوشەی کام وشەیە؟","«{t}» و «{d}» دژەوشەی یەکترن.","درێژ|کورت;گەورە|بچووک;بەرز|نزم;خێرا|هێواش;ئاسان|سەخت;گەرم|سارد;ڕووناک|تاریک;کۆن|نوێ;پڕ|بەتاڵ;نزیک|دوور;باش|خراپ;ئەستوور|باریک;ڕەش|سپی;کراوە|داخراو;شاد|خەمبار;بەهێز|لاواز;دەوڵەمەند|هەژار;ڕۆژ|شەو;هەرزان|گران;پیر|گەنج;ڕاست|چەپ;سەرکەوتن|شکست;زیرەک|گێل;خۆش|ناخۆش;هاتن|چوون"]],
+/*5 ئینگلیزی*/[["What is the past simple of the verb \"{t}\"?","Which verb has the past simple form \"{d}\"?","{t} → past simple: {d}","go|went;see|saw;eat|ate;write|wrote;take|took;give|gave;know|knew;speak|spoke;buy|bought;bring|brought;think|thought;teach|taught;swim|swam"],["What is the past participle of the verb \"{t}\"?","Which verb has the past participle \"{d}\"?","{t} → past participle: {d}","go|gone;see|seen;eat|eaten;write|written;take|taken;give|given;know|known;speak|spoken;break|broken;drive|driven;choose|chosen;fly|flown"]],
+/*6 عەرەبی*/[["ما ضدّ كلمة «{t}»؟","«{d}» هي ضدّ أيّ كلمة؟","ضدّ {t} هو {d}.","كبير|صغير;طويل|قصير;سريع|بطيء;سهل|صعب;حار|بارد;قديم|جديد;نور|ظلام;صباح|مساء;غني|فقير;قوي|ضعيف;مفتوح|مغلق;بعيد|قريب;حزين|سعيد"],["ما جمع كلمة «{t}»؟","«{d}» هو جمع أيّ كلمة؟","جمع {t} هو {d}.","كتاب|كتب;قلم|أقلام;مدرسة|مدارس;طالب|طلاب;باب|أبواب;بيت|بيوت;رجل|رجال;ولد|أولاد;شجرة|أشجار;مدينة|مدن;نهر|أنهار;كلب|كلاب"]],
+/*7 ئایین*/[["{t} چییە؟","«{d}» وەڵامی کام پرسیارە؟","{t}: {d}.","ستوونی یەکەمی ئیسلام|شەهادەتەین;ستوونی دووەمی ئیسلام|نوێژ;ستوونی سێیەمی ئیسلام|زەکات;ستوونی چوارەمی ئیسلام|ڕۆژووی ڕەمەزان;ستوونی پێنجەمی ئیسلام|حەج;ژمارەی نوێژە فەرزەکانی ڕۆژانە|پێنج نوێژ;یەکەم سوورەتی قورئان|فاتیحە;کۆتا سوورەتی قورئان|ناس;درێژترین سوورەتی قورئان|بەقەرە;ژمارەی سوورەتەکانی قورئان|١١٤;ڕەمەزان مانگی چەندەمی کۆچییە|مانگی نۆیەم;شوێنی لەدایکبوونی پێغەمبەر (د.خ)|مەککە;شاری کۆچکردنی پێغەمبەر (د.خ)|مەدینە;قیبلەی موسڵمانان|کەعبە;جەژنی دوای ڕەمەزان|جەژنی فیتر;جەژنی حەج|جەژنی قوربان;ئەو فریشتەیەی وەحی دەهێنا|جبریل;ژمارەی ڕکاتەکانی نوێژی بەیانی|دوو ڕکات;ژمارەی ڕکاتەکانی نوێژی مەغریب|سێ ڕکات;ژمارەی ڕکاتەکانی نوێژی عیشا|چوار ڕکات;پاکبوونەوە پێش نوێژ|دەستنوێژ;ڕۆژی نوێژی جومعە|هەینی;کتێبی پیرۆزی موسڵمانان|قورئان;مانگی یەکەمی ساڵی کۆچی|موحەڕڕەم;ناوی یەکەم پێغەمبەر|ئادەم"]],
+/*8 مەڵتیمیدیا*/[["«{t}» چییە؟","کامیان ئەمەیە: «{d}»؟","{t} = {d}.","JPG|فۆرماتی وێنە کە قەبارەی بچووک دەکات;PNG|فۆرماتی وێنە کە باکگراوندی شەفاف پشتگیری دەکات;GIF|فۆرماتی وێنەی جووڵاو;SVG|فۆرماتی وێنەی ڤێکتەر;MP3|فۆرماتی دەنگ;WAV|فۆرماتی دەنگی بێ فشار;MP4|فۆرماتی ڤیدیۆ;RGB|مۆدێلی ڕەنگی شاشە;CMYK|مۆدێلی ڕەنگی چاپکردن;Pixel|بچووکترین یەکەی وێنەی دیجیتاڵ;Resolution|ژمارەی پیکسێلەکانی وێنە;FPS|ژمارەی فریم لە چرکەیەکدا;Raster|وێنەی پێکهاتوو لە پیکسێل;Vector|وێنەی پێکهاتوو لە هێڵ و فۆرمول;Layer|چینێکی دیزاین لە Photoshop;Photoshop|بەرنامەی دەستکاریکردنی وێنەی Raster;Illustrator|بەرنامەی دیزاینی Vector;Premiere Pro|بەرنامەی مۆنتاژی ڤیدیۆ;Audacity|بەرنامەی دەستکاریکردنی دەنگ;Codec|کۆدکردن و فشاردنی دەنگ و ڤیدیۆ;Animation|دروستکردنی جووڵە لە وێنەکان;Timeline|هێڵی کات بۆ ڕیزکردنی کلیپەکان;Compression|بچووککردنەوەی قەبارەی فایل;Hue|تۆنی ڕەنگ;Bit rate|ژمارەی بیتەکان لە چرکەیەکدا"]],
+/*9 سپریدشیت*/[["«{t}» چییە یان چی دەکات؟","کامیان ئەمەیە: «{d}»؟","{t} = {d}.","=SUM()|کۆی خانەکان;=AVERAGE()|تێکڕای خانەکان;=MAX()|گەورەترین بەها;=MIN()|بچووکترین بەها;=COUNT()|ژماردنی خانە ژمارەییەکان;=COUNTA()|ژماردنی خانە پڕەکان;=IF()|دیاریکردنی ئەنجام بەپێی مەرج;=VLOOKUP()|گەڕان بۆ بەها لە ستوونی یەکەم و هێنانی بەهای ستوونێکی تر;=TODAY()|بەرواری ئەمڕۆ;=NOW()|بەروار و کاتی ئێستا;=ROUND()|گەردکردنەوەی ژمارە;=LEN()|ژمارەی پیتەکانی دەق;=CONCATENATE()|بەستنەوەی چەند دەقێک;B3|خانەی ستوونی B و ڕیزی ٣;A1:A5|مەوداییەک لە خانەکان;$A$1|ناونیشانی ڕەها (Absolute);F2|دەستکاریکردنی ناوەڕۆکی خانە;Filter|پیشاندانی تەنها ئەو داتایانەی مەرجەکە;Sort|ڕیزکردنی داتا;Chart|هێڵکاری لە داتاکان;Pivot Table|کورتکردنەوە و شیکردنەوەی داتا;Workbook|فایلی Excel;Worksheet|یەک شیت لە ناو فایلی Excel;.xlsx|پاشگری فایلی Excel;#DIV/0!|هەڵەی دابەشکردن بە سفر"]]
+];
+const mk=(q,a,pool,e)=>[q,a,...sh([...new Set(pool)].filter(x=>x!==a)).slice(0,3),0,e].join('|');
+function mathQs(){
+  const o=[],R=(a,b)=>a+rnd(b-a+1),A=ar,sup=['²','³'],L=s=>'<bdi dir="ltr">'+s+'</bdi>';
+  const add=(q,a,e)=>{const s=new Set([a]);while(s.size<4){const x=a+rnd(11)-5;if(x!==a)s.add(x)}o.push([q,...[...s].map(A),0,e].join('|'))};
+  for(let r=0;r<5;r++){
+    let a=R(2,9),b=R(2,3);add(`ئەنجامی ${L(A(a)+sup[b-2])} چەندە؟`,a**b,`${L(A(a)+sup[b-2]+' = '+Array(b).fill(A(a)).join(' × ')+' = '+A(a**b))}`);
+    let q=R(2,15);add(`ڕەگی دووی ${A(q*q)} چەندە؟`,q,`چونکە ${L(A(q)+' × '+A(q)+' = '+A(q*q))}`);
+    let x=R(1,12),m=R(2,6),c=R(1,15);add(`بەهای x لەم هاوکێشەیەدا چەندە؟ ${L(A(m)+'x + '+A(c)+' = '+A(m*x+c))}`,x,`${L(A(m*x+c)+' − '+A(c)+' = '+A(m*x))} ، دواتر ${L('÷ '+A(m)+' = '+A(x))}`);
+    let p=[10,20,25,50][rnd(4)],n=20*R(1,10);add(`${A(p)}٪ی ${A(n)} چەندە؟`,n*p/100,`${L(A(n)+' × '+A(p)+' ÷ ١٠٠ = '+A(n*p/100))}`);
+    let l=R(3,15),w=R(2,12);add(`ڕووبەری چوارگۆشەیەک بە درێژی ${A(l)} و پانی ${A(w)} چەندە؟`,l*w,`ڕووبەر = درێژی × پانی = ${L(A(l)+' × '+A(w)+' = '+A(l*w))}`);
+    l=R(3,15);w=R(2,12);add(`دەوری چوارگۆشەیەک بە درێژی ${A(l)} و پانی ${A(w)} چەندە؟`,2*(l+w),`دەور = ٢ × (درێژی + پانی) = ${L('٢ × ('+A(l)+' + '+A(w)+') = '+A(2*(l+w)))}`);
+    let u=R(10,40),v=R(10,40),z=R(10,40);z+=(3-(u+v+z)%3)%3;add(`تێکڕای ${A(u)} و ${A(v)} و ${A(z)} چەندە؟`,(u+v+z)/3,`کۆ = ${A(u+v+z)}، ئینجا ${L('÷ ٣ = '+A((u+v+z)/3))}`);
+    let d1=R(2,9),d2=R(2,9),d3=R(2,9);add(`ئەنجامی ${L(A(d1)+' + '+A(d2)+' × '+A(d3))} چەندە؟`,d1+d2*d3,`سەرەتا لێکدان: ${L(A(d2)+' × '+A(d3)+' = '+A(d2*d3))}، پاشان کۆ لەگەڵ ${A(d1)} دەکەیتە ${A(d1+d2*d3)}`);
+    let bs=2*R(2,10),ht=R(3,12);add(`ڕووبەری سێگۆشەیەک بە بنکەی ${A(bs)} و بەرزی ${A(ht)} چەندە؟`,bs*ht/2,`ڕووبەر = (بنکە × بەرزی) ÷ ٢ = ${L('('+A(bs)+' × '+A(ht)+') ÷ ٢ = '+A(bs*ht/2))}`);
+    let e1=R(3,20),e2=R(1,15);add(`ئەنجامی ${L(A(e1)+' − (−'+A(e2)+')')} چەندە؟`,e1+e2,`کەمکردنەوەی ژمارەی نەرێنی وەک کۆکردنەوە وایە: ${L(A(e1)+' + '+A(e2)+' = '+A(e1+e2))}`);
+  }
+  return o;
+}
+function gen(i){
+  if(i===3)return QB[3].concat(mathQs());
+  const out=QB[i].slice();
+  (SETS[i]||[]).forEach(([fq,rq,ex,ps])=>{const P=ps.split(';').map(s=>s.split('|'));
+    P.forEach(p=>{const e=ex.replace('{t}',()=>p[0]).replace('{d}',()=>p[1]);
+      out.push(mk(fq.replace('{t}',()=>p[0]),p[1],P.map(x=>x[1]),e));
+      out.push(mk(rq.replace('{d}',()=>p[1]),p[0],P.map(x=>x[0]),e))})});
+  return out;
+}
+function quiz(){
+  app.innerHTML=`<div class="panel"><h2>کویزی دەرسەکان</h2><p class="sub">دەرسێک هەڵبژێرە. هەر پرسیارێک شەرحی وەڵامەکەی هەیە.</p><div class="grid">${SUB.map((s,i)=>{const b=st.get('qz'+i);return `<button class="tile" data-i="${i}"><span class="ic">${s[0]}</span><b>${s[1]}</b><small>${ar(gen(i).length)} پرسیار${b?' · باشترین: '+ar(b):''}</small></button>`}).join('')}</div></div>`;
+  app.querySelectorAll('.tile').forEach(t=>t.onclick=()=>go(()=>subj(+t.dataset.i)));
+}
+function subj(i,len){
+  const v=view;
+  if(!len){app.innerHTML=`<div class="panel"><h2>${SUB[i][0]} ${SUB[i][1]}</h2><p class="sub">چەند پرسیار دەتەوێت؟</p><div class="slot"><button class="btn" data-n="10">١٠ پرسیار</button><button class="btn" data-n="25">٢٥ پرسیار</button><button class="btn" data-n="999">هەموو</button></div></div>`;app.querySelectorAll('.btn').forEach(b=>b.onclick=()=>go(()=>subj(i,+b.dataset.n)));return}
+  const Q=sh(gen(i)).slice(0,len).map(s=>s.split('|'));let n=0,k=0;
+  function show(){
+    if(n>=Q.length){
+      const b=+st.get('qz'+i)||0;if(k>b)st.set('qz'+i,k);const g=k>=Q.length*.75;if(g)confetti();
+      app.innerHTML=`<div class="panel"><h2>${SUB[i][0]} ${SUB[i][1]}</h2><p class="sub" style="font-size:22px">نمرەکەت ${ar(k)} لە ${ar(Q.length)}</p><p class="sub">${g?'نایاب! زۆر شارەزایت.':k>=Q.length/2?'باشە، بەڵام دووبارە بیخوێنەوە.':'دووبارە هەوڵ بدەوە، دەتوانیت!'}</p><button class="btn" id="a1">دووبارە</button> <button class="btn ghost" id="a2">دەرسەکان</button></div>`;
+      $('#a1').onclick=()=>go(()=>subj(i));$('#a2').onclick=()=>go(quiz);return}
+    const q=Q[n],ans=+q[5],o=sh(q.slice(1,5).map((t,j)=>[t,j===ans]));
+    app.innerHTML=`<div class="panel"><div class="bar"><i style="width:${n/Q.length*100}%"></i></div><p class="muted">${SUB[i][1]} · پرسیاری ${ar(n+1)} لە ${ar(Q.length)}</p><h2 style="font-size:20px;line-height:1.8">${q[0]}</h2>${o.map(x=>`<button class="opt">${x[0]}</button>`).join('')}<div id="ex"></div></div>`;
+    const os=app.querySelectorAll('.opt');let lk=false;
+    os.forEach((b,j)=>b.onclick=()=>{if(lk)return;lk=true;
+      os.forEach((c,m)=>{if(o[m][1])c.classList.add('ok')});
+      if(o[j][1]){k++;buzz(30)}else b.classList.add('no');
+      $('#ex').innerHTML=`<div class="ex"><b>${o[j][1]?'✓ دروستە':'✗ هەڵەیە'}</b><br>${q[6]}</div><p><button class="btn" id="nx">${n+1<Q.length?'پرسیاری دواتر':'ئەنجام'}</button></p>`;
+      $('#nx').onclick=()=>{if(v===view){n++;show()}}});
+  }
+  show();
+}
+
+/* ---------- یاری مار ---------- */
+function snake(){
+  const v=view,N=15;let sn=[[7,7]],d=[1,0],nd=d,f=[3,3],sc=0;const best=+st.get('sn')||0;
+  app.innerHTML=`<div class="panel"><h2>یاری مار</h2><p class="sub">بخۆ و گەورە ببە. بە دیوار و خۆت مەکەوە.</p><div class="stats"><span class="chip" id="s1">خاڵ: ٠</span><span class="chip">باشترین: ${ar(best)}</span></div><canvas class="gc" id="sc" width="300" height="300"></canvas><div class="dp"><i></i><button data-x="0" data-y="-1">▲</button><i></i><button data-x="-1" data-y="0">◀</button><button data-x="0" data-y="1">▼</button><button data-x="1" data-y="0">▶</button></div><p class="sub" id="sm"></p><button class="btn ghost" id="sr">دووبارە</button></div>`;
+  const cv2=$('#sc'),c=cv2.getContext('2d');
+  const dir=(x,y)=>{if(x+d[0]!==0||y+d[1]!==0)nd=[x,y]};
+  app.querySelectorAll('.dp button').forEach(b=>b.onclick=()=>dir(+b.dataset.x,+b.dataset.y));
+  document.onkeydown=e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m&&v===view){e.preventDefault();dir(...m)}};
+  let sx,sy;cv2.ontouchstart=e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY};
+  cv2.ontouchend=e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;Math.abs(dx)>Math.abs(dy)?dir(dx>0?1:-1,0):dir(0,dy>0?1:-1)};
+  const has=(p,a)=>a.some(q=>q[0]===p[0]&&q[1]===p[1]);
+  function draw(){c.clearRect(0,0,300,300);c.fillStyle='#fff';c.beginPath();c.arc(f[0]*20+10,f[1]*20+10,7,0,7);c.fill();
+    sn.forEach((p,i)=>{c.fillStyle=i?'#38bdf8':'#bae6fd';c.fillRect(p[0]*20+1,p[1]*20+1,18,18)})}
+  tm=setInterval(()=>{if(v!==view){clearInterval(tm);return}
+    d=nd;const h=[sn[0][0]+d[0],sn[0][1]+d[1]];
+    if(h[0]<0||h[1]<0||h[0]>=N||h[1]>=N||has(h,sn)){clearInterval(tm);if(sc>best)st.set('sn',sc);$('#sm').textContent='یاری تەواو بوو. خاڵەکەت: '+ar(sc);buzz(200);return}
+    sn.unshift(h);
+    if(h[0]===f[0]&&h[1]===f[1]){sc++;$('#s1').textContent='خاڵ: '+ar(sc);do{f=[rnd(N),rnd(N)]}while(has(f,sn))}else sn.pop();
+    draw()},130);
+  draw();$('#sr').onclick=()=>go(snake);
+}
+
+/* ---------- یاری ئامانج ---------- */
+function target(){
+  const v=view;let sc=0,t=20,run=false;const best=+st.get('tg')||0;
+  app.innerHTML=`<div class="panel"><h2>یاری ئامانج</h2><p class="sub">دوگمە گەشاوەکە بگرە. ٢٠ چرکەت هەیە.</p><div class="stats"><span class="chip" id="t1">خاڵ: ٠</span><span class="chip" id="t2">کات: ٢٠</span><span class="chip">باشترین: ${ar(best)}</span></div><div class="tbox" id="tb"></div><button class="btn" id="ts">دەستپێکردن</button></div>`;
+  const tb=$('#tb');
+  const place=()=>{const d=$('#dt');d.style.left=rnd(tb.clientWidth-54)+'px';d.style.top=rnd(tb.clientHeight-54)+'px'};
+  $('#ts').onclick=()=>{if(run)return;run=true;sc=0;t=20;tb.innerHTML='<button class="dot" id="dt"></button>';place();$('#t1').textContent='خاڵ: ٠';
+    $('#dt').onpointerdown=e=>{e.preventDefault();sc++;$('#t1').textContent='خاڵ: '+ar(sc);buzz(15);place()};
+    tm=setInterval(()=>{if(v!==view){clearInterval(tm);return}t--;$('#t2').textContent='کات: '+ar(t);
+      if(t<=0){clearInterval(tm);run=false;tb.innerHTML='<p class="sub" style="padding-top:90px;font-size:20px;text-align:center">کاتەکە تەواو بوو! '+ar(sc)+' جار گرتت.</p>';if(sc>best)st.set('tg',sc);confetti();$('#ts').textContent='دووبارە'}},1000)};
+}
+
+/* ---------- بیرکاری خێرا ---------- */
+function mathgame(){
+  const v=view;let sc=0,t=30;const best=+st.get('mg')||0;
+  app.innerHTML=`<div class="panel"><h2>بیرکاری خێرا</h2><p class="sub">٣٠ چرکەت هەیە، وەڵامی دروست هەڵبژێرە.</p><div class="stats"><span class="chip" id="q1">دروست: ٠</span><span class="chip" id="q2">کات: ٣٠</span><span class="chip">باشترین: ${ar(best)}</span></div><div id="qb"><button class="btn" id="qs">دەستپێکردن</button></div></div>`;
+  function nq(){
+    const a=1+rnd(12),b=1+rnd(12),op=rnd(3),r=[a+b,a-b,a*b][op],o=new Set([r]);while(o.size<4)o.add(r+rnd(11)-5);
+    $('#qb').innerHTML=`<h2 style="direction:ltr;font-size:34px">${a} ${'+−×'[op]} ${b} = ?</h2><div class="grid">${sh([...o]).map(x=>`<button class="opt" data-x="${x}" style="text-align:center;direction:ltr">${x}</button>`).join('')}</div>`;
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(+b.dataset.x===r){sc++;$('#q1').textContent='دروست: '+ar(sc);buzz(15)}else buzz(80);nq()});
+  }
+  $('#qs').onclick=()=>{nq();tm=setInterval(()=>{if(v!==view){clearInterval(tm);return}t--;$('#q2').textContent='کات: '+ar(t);
+    if(t<=0){clearInterval(tm);if(sc>best)st.set('mg',sc);confetti();
+      $('#qb').innerHTML=`<p class="sub" style="font-size:20px">کاتەکە تەواو بوو! ${ar(sc)} وەڵامی دروستت دا.</p><button class="btn ghost" id="qr">دووبارە</button>`;$('#qr').onclick=()=>go(mathgame)}},1000)};
+}
+
+
+/* ---------- یارییە نوێیەکان ---------- */
+const PN=(t,s,b)=>{app.innerHTML=`<div class="panel"><h2>${t}</h2><p class="sub">${s}</p>${b}</div>`};
+const bs=k=>+st.get(k)||0,sv=(k,x)=>{if(x>bs(k))st.set(k,x)};
+const CH=(id,x)=>`<span class="chip" id="${id}">${x}</span>`,ST=(...c)=>'<div class="stats">'+c.join('')+'</div>';
+const set=(id,x)=>{const e=$('#'+id);if(e)e.textContent=x};
+const TS=(k,s=30)=>ST(CH('a','خاڵ: ٠'),CH('b','کات: '+ar(s)),CH('c','باشترین: '+ar(bs(k))));
+function tmr(v,s,f,end){let t=s;tm=setInterval(()=>{if(v!==view){clearInterval(tm);return}t--;f(t);if(t<=0){clearInterval(tm);end()}},1000)}
+
+function simon(){
+  const v=view,C=['#38bdf8','#22c55e','#facc15','#ef4444'];let seq=[],pos=0,busy=true,sc=0;
+  PN('سایمۆن','ڕیزی ڕەنگەکان وەبیر بێنەوە و دووبارەیان بکەرەوە.',ST(CH('a','خاڵ: ٠'),CH('c','باشترین: '+ar(bs('simon'))))+`<div class="xo" style="grid-template-columns:1fr 1fr;max-width:260px">${C.map(c=>`<button class="xc" style="background:${c};opacity:.45"></button>`).join('')}</div><p class="sub" id="m"></p><button class="btn" id="go">دەستپێکردن</button>`);
+  const pd=app.querySelectorAll('.xc'),fl=i=>{pd[i].style.opacity=1;setTimeout(()=>pd[i].style.opacity=.45,300)};
+  const play=()=>{busy=true;pos=0;seq.push(rnd(4));set('m','سەیر بکە...');seq.forEach((s,k)=>setTimeout(()=>{if(v===view)fl(s)},600*(k+1)));setTimeout(()=>{if(v===view){busy=false;set('m','نۆرەی تۆیە')}},600*seq.length+400)};
+  pd.forEach((b,i)=>b.onclick=()=>{if(busy)return;fl(i);if(i!==seq[pos]){busy=true;sv('simon',sc);set('m','هەڵە بوو! یاری تەواو بوو.');buzz(200);return}pos++;if(pos===seq.length){sc++;set('a','خاڵ: '+ar(sc));busy=true;tm=setTimeout(play,700)}});
+  $('#go').onclick=()=>{clearTimeout(tm);seq=[];sc=0;set('a','خاڵ: ٠');play()};
+}
+function mole(){
+  const v=view;let sc=0,cur=-1,on=false;
+  PN('مشک بکوتە','٣٠ چرکەت هەیە؛ هەر کاتێک مشکەکە دەرکەوت بیکوتە.',TS('mole')+`<div class="xo">${Array(9).fill('<button class="xc"></button>').join('')}</div><button class="btn" id="go">دەستپێکردن</button>`);
+  const cs=app.querySelectorAll('.xc'),up=()=>{if(cur>=0)cs[cur].textContent='';cur=rnd(9);cs[cur].textContent='🐹'};
+  cs.forEach((c,i)=>c.onclick=()=>{if(on&&i===cur){sc++;set('a','خاڵ: '+ar(sc));buzz(15);up()}});
+  $('#go').onclick=()=>{if(on)return;on=true;sc=0;up();const m=setInterval(()=>{if(v!==view||!on)return clearInterval(m);up()},800);
+    tmr(v,30,t=>set('b','کات: '+ar(t)),()=>{on=false;clearInterval(m);cs[cur].textContent='';sv('mole',sc);confetti()})};
+}
+function stroop(){
+  const v=view,N=[['سوور','#ef4444'],['شین','#3b82f6'],['سەوز','#22c55e'],['زەرد','#facc15']];let sc=0,ans=0,run=false;
+  PN('ڕەنگ نەک وشە','ڕەنگی نووسینەکە هەڵبژێرە، نەک ئەو وشەیەی نووسراوە!',TS('stroop')+`<div id="w" style="font-size:46px;font-weight:800;min-height:66px">؟</div><div class="slot">${N.map((n,i)=>`<button class="btn ghost" data-i="${i}">${n[0]}</button>`).join('')}</div><p><button class="btn" id="go">دەستپێکردن</button></p>`);
+  const nx=()=>{const a=rnd(4);ans=rnd(4);const w=$('#w');w.textContent=N[a][0];w.style.color=N[ans][1]};
+  app.querySelectorAll('.slot button').forEach(b=>b.onclick=()=>{if(!run)return;if(+b.dataset.i===ans){sc++;set('a','خاڵ: '+ar(sc));buzz(15)}else buzz(80);nx()});
+  $('#go').onclick=()=>{if(run)return;run=true;sc=0;nx();tmr(v,30,t=>set('b','کات: '+ar(t)),()=>{run=false;sv('stroop',sc);$('#w').textContent='ئافەرین!';$('#w').style.color='';confetti()})};
+}
+function rps(){
+  const E=['✊','✋','✌️'],R=['بەرد','کاغەز','مقەست'];let w=0,l=0,d=0;
+  PN('بەرد، کاغەز، مقەست','لەگەڵ کۆمپیوتەر یاری بکە.',ST(CH('a',''))+`<div class="slot">${E.map((e,i)=>`<button class="btn ghost" data-i="${i}" style="font-size:36px">${e}</button>`).join('')}</div><p class="sub" id="m" style="margin-top:14px"></p>`);
+  const up=()=>set('a',`تۆ: ${ar(w)} | کۆمپیوتەر: ${ar(l)} | یەکسان: ${ar(d)}`);up();
+  app.querySelectorAll('.slot button').forEach(b=>b.onclick=()=>{const p=+b.dataset.i,c=rnd(3),r=(p-c+3)%3;
+    set('m',`تۆ ${E[p]} ${R[p]} — کۆمپیوتەر ${E[c]} ${R[c]}. `+(r===0?(d++,'یەکسان بوو.'):r===1?(w++,'تۆ بردتەوە!'):(l++,'کۆمپیوتەر بردیەوە.')));up();buzz(20)});
+}
+function dice(){
+  PN('زار و پارە','کلیک بکە و بەختی خۆت تاقی بکەرەوە.',`<div id="d" style="font-size:90px;margin:10px">🎲</div><div class="slot"><button class="btn" id="b1">زار هەڵبدە 🎲</button><button class="btn ghost" id="b2">پارە فڕێبدە 🪙</button></div><p class="sub" id="m" style="margin-top:14px"></p>`);
+  const run=f=>{let k=0;const i=setInterval(()=>{f();if(++k>9)clearInterval(i)},70);buzz(30)};
+  $('#b1').onclick=()=>run(()=>{const n=1+rnd(6);$('#d').textContent='⚀⚁⚂⚃⚄⚅'[n-1];set('m','ژمارە: '+ar(n))});
+  $('#b2').onclick=()=>run(()=>{const h=rnd(2);$('#d').textContent=h?'🪙':'⚪';set('m',h?'سەر':'پشت')});
+}
+function scram(){
+  const W=sh(['کۆمپیوتەر','پەیمانگا','مامۆستا','خوێندکار','کتێبخانە','ئینتەرنێت','پرۆگرام','کیبۆرد','شاشە','هەولێر','داتابەیس','پرۆسێسەر']);let sc=0,n=0,w='';
+  PN('وشەی تێکچوو','پیتەکان ڕێک بخەرەوە و وشەکە بنووسە.',ST(CH('a','خاڵ: ٠'),CH('c','باشترین: '+ar(bs('scr'))))+`<div id="w" style="font-size:32px;margin:14px;font-weight:800;color:var(--a)"></div><div><input id="i" style="width:190px;direction:rtl"><button class="btn" id="ok">پشکنین</button></div><p class="sub" id="m" style="margin-top:12px"></p><button class="btn ghost" id="sk">وشەی تر</button>`);
+  const nx=()=>{w=W[n++%W.length];let s;do{s=sh(Array.from(w))}while(s.join('')===w);set('w',s.join(' '));$('#i').value=''};nx();
+  const ck=()=>{if($('#i').value.trim()===w){sc++;set('a','خاڵ: '+ar(sc));sv('scr',sc);set('m','دروستە! ✓');confetti();nx()}else set('m','دووبارە هەوڵ بدە.')};
+  $('#ok').onclick=ck;$('#i').onkeydown=e=>{if(e.key==='Enter')ck()};$('#sk').onclick=nx;
+}
+function nmem(){
+  let lv=3,num='';
+  PN('بیرهێنانەوەی ژمارە','ژمارەکە ببینە، دواتر بینووسەوە.',ST(CH('a','ئاست: ٣'),CH('c','باشترین: '+ar(bs('nm'))))+`<div id="d" style="font-size:44px;direction:ltr;min-height:64px;letter-spacing:6px;color:var(--a);font-weight:800"></div><div id="f" style="display:none"><input id="i" inputmode="numeric" style="width:200px"><button class="btn" id="ok">پشکنین</button></div><p class="sub" id="m"></p><button class="btn" id="go">دەستپێکردن</button>`);
+  const sw=()=>{num=Array.from({length:lv},()=>rnd(10)).join('');set('d',num);$('#f').style.display='none';set('m','وەبیری بهێنەوە...');
+    tm=setTimeout(()=>{set('d','؟');$('#f').style.display='block';$('#i').value='';$('#i').focus();set('m','')},800+lv*400)};
+  $('#go').onclick=()=>{clearTimeout(tm);lv=3;set('a','ئاست: ٣');sw()};
+  $('#ok').onclick=()=>{if($('#i').value.trim()===num){sv('nm',lv);lv++;set('a','ئاست: '+ar(lv));confetti();sw()}else{set('m','هەڵە بوو، ژمارەکە '+ar(num)+' بوو.');$('#f').style.display='none'}};
+}
+function slide(){
+  let b=[],mv=0;const o0=bs('sl');
+  PN('پازڵی ژمارە','ژمارەکان بە ڕێز ڕێک بخە (١ تا ٨).',ST(CH('a','هەنگاو: ٠'),CH('c','باشترین: '+(o0?ar(o0):'—')))+`<div class="xo" id="g"></div><p class="sub" id="m"></p><button class="btn ghost" id="ag">تێکەڵکردن</button>`);
+  const dr=()=>{$('#g').innerHTML=b.map((x,i)=>`<button class="xc" data-i="${i}" style="${x?'':'visibility:hidden'}">${x?ar(x):''}</button>`).join('');app.querySelectorAll('.xc').forEach(c=>c.onclick=()=>mvT(+c.dataset.i))};
+  const mvT=i=>{const z=b.indexOf(0);if(Math.abs(i%3-z%3)+Math.abs(((i/3)|0)-((z/3)|0))!==1)return;[b[i],b[z]]=[b[z],b[i]];mv++;set('a','هەنگاو: '+ar(mv));dr();
+    if(b.join('')==='123456780'){set('m','ئافەرین! تەواوت کرد.');confetti();const o=bs('sl');if(!o||mv<o)st.set('sl',mv)}};
+  const mix=()=>{b=[1,2,3,4,5,6,7,8,0];let z=8;for(let k=0;k<150;k++){const nb=[z-3,z+3,z%3?z-1:-1,z%3<2?z+1:-1].filter(x=>x>=0&&x<9),q=nb[rnd(nb.length)];[b[z],b[q]]=[b[q],b[z]];z=q}mv=0;set('a','هەنگاو: ٠');set('m','');dr()};
+  $('#ag').onclick=mix;mix();
+}
+function hilo(){
+  let c=1+rnd(13),sc=0;
+  PN('زیاتر یان کەمتر','ژمارەی دواتر لە ئێستا زیاترە یان کەمتر؟',ST(CH('a','زنجیرە: ٠'),CH('c','باشترین: '+ar(bs('hl'))))+`<div id="n" style="font-size:80px;font-weight:800;color:var(--a);margin:8px"></div><div class="slot"><button class="btn" id="hi">⬆ زیاتر</button><button class="btn ghost" id="lo">⬇ کەمتر</button></div><p class="sub" id="m" style="margin-top:12px"></p>`);
+  const show=()=>set('n',ar(c));show();
+  const g=up=>{let n;do{n=1+rnd(13)}while(n===c);const ok=up?n>c:n<c;set('m',(ok?'دروستە ✓ ':'هەڵە ✗ ')+'ژمارەکە '+ar(n)+' بوو.');if(ok){sc++;buzz(15)}else{sc=0;buzz(120)}sv('hl',sc);set('a','زنجیرە: '+ar(sc));c=n;show()};
+  $('#hi').onclick=()=>g(1);$('#lo').onclick=()=>g(0);
+}
+function lights(){
+  let b=[],mv=0;
+  PN('چراکان','هەموو چراکان بکوژێنەوە! کلیک لە هەر یەکێک خۆی و دراوسێکانی دەگۆڕێت.',ST(CH('a','هەنگاو: ٠'))+`<div class="xo" id="g" style="grid-template-columns:repeat(5,1fr);max-width:320px"></div><p class="sub" id="m"></p><button class="btn ghost" id="ag">یاری نوێ</button>`);
+  const fp=i=>{const r=(i/5)|0,c=i%5;b[i]^=1;if(r>0)b[i-5]^=1;if(r<4)b[i+5]^=1;if(c>0)b[i-1]^=1;if(c<4)b[i+1]^=1};
+  const dr=()=>{$('#g').innerHTML=b.map((x,i)=>`<button class="xc" data-i="${i}" style="font-size:0;background:${x?'var(--a2)':'var(--s)'};box-shadow:${x?'0 0 14px var(--a2)':'none'}"></button>`).join('');
+    app.querySelectorAll('.xc').forEach(c=>c.onclick=()=>{fp(+c.dataset.i);mv++;set('a','هەنگاو: '+ar(mv));dr();if(b.every(x=>!x)){set('m','ئافەرین! هەموو چراکانت کوژاندەوە.');confetti()}})};
+  const nw=()=>{b=Array(25).fill(0);mv=0;set('m','');set('a','هەنگاو: ٠');for(let k=0;k<12;k++)fp(rnd(25));if(b.every(x=>!x))b[12]=1;dr()};
+  $('#ag').onclick=nw;nw();
+}
+function cps(){
+  const v=view;let n=0,run=false;
+  PN('خێرایی کلیک','لە ١٠ چرکەدا چەند جار کلیک دەکەیت؟',ST(CH('a','کلیک: ٠'),CH('b','کات: ١٠'),CH('c','باشترین: '+ar(bs('cps'))))+`<button class="btn" id="bt" style="width:100%;height:160px;font-size:26px;line-height:1.6">کلیک بکە!</button>`);
+  $('#bt').onclick=()=>{if(!run){run=true;n=0;tmr(v,10,t=>set('b','کات: '+ar(t)),()=>{run=false;sv('cps',n);$('#bt').textContent='تەواو بوو: '+ar(n)+' کلیک ('+ar((n/10).toFixed(1))+' لە چرکەیەکدا). بۆ دووبارە کلیک بکە.';confetti()})}n++;set('a','کلیک: '+ar(n))};
+}
+function typing(){
+  const S=['کۆمپیوتەر ئامێرێکی ئەلیکترۆنییە','پەیمانگای گەشە باشترین شوێنی خوێندنە','هەر ڕۆژێک شتێکی نوێ فێر ببە','زانست ڕووناکی ژیانە','بەردەوامی کلیلی سەرکەوتنە','داتابەیس شوێنی هەڵگرتنی زانیارییە'];let s='',t0=0;const o0=bs('ty');
+  PN('خێرایی نووسین','ڕستەکە بە خێرایی و بێ هەڵە بنووسەوە.',ST(CH('c','باشترین: '+(o0?ar(o0)+' چرکە':'—')))+`<div id="s" style="font-size:20px;line-height:1.9;margin:10px;color:var(--a)"></div><input id="i" style="width:100%;direction:rtl;font-size:18px"><p class="sub" id="m" style="margin-top:12px"></p><button class="btn ghost" id="ag">ڕستەی تر</button>`);
+  const nx=()=>{s=S[rnd(S.length)];set('s',s);$('#i').value='';t0=0;set('m','')};nx();
+  $('#i').oninput=e=>{if(!t0)t0=performance.now();if(e.target.value===s){const sec=(performance.now()-t0)/1000;set('m','تەواو! '+ar(sec.toFixed(1))+' چرکە.');confetti();const o=bs('ty');if(!o||sec<o)st.set('ty',sec.toFixed(1));e.target.blur()}};
+  $('#ag').onclick=nx;
+}
+function balloon(){
+  const v=view;let sc=0,run=false,iv;
+  PN('پەلەهەوا','هەر پەلەهەوایەک دەتەقێنیت یەک خاڵە. ٣٠ چرکەت هەیە.',TS('bl')+`<div class="tbox" id="tb"></div><button class="btn" id="go">دەستپێکردن</button>`);
+  $('#go').onclick=()=>{if(run)return;run=true;sc=0;const tb=$('#tb');tb.innerHTML='';
+    iv=setInterval(()=>{if(v!==view){clearInterval(iv);return}const b=document.createElement('button');b.className='bl';b.textContent='🎈';b.style.left=rnd(Math.max(tb.clientWidth-60,1))+'px';
+      b.onpointerdown=()=>{if(b.dataset.x)return;b.dataset.x=1;b.textContent='💥';sc++;set('a','خاڵ: '+ar(sc));buzz(15);setTimeout(()=>b.remove(),150)};b.onanimationend=()=>b.remove();tb.appendChild(b)},550);
+    tmr(v,30,t=>set('b','کات: '+ar(t)),()=>{clearInterval(iv);run=false;sv('bl',sc);tb.innerHTML='<p class="sub" style="padding-top:100px;text-align:center;font-size:20px">کاتەکە تەواو بوو! '+ar(sc)+' پەلەهەوات تەقاند.</p>';confetti()})};
+}
+function odd(){
+  const v=view,P=[['😀','😃'],['🐶','🐕'],['🌑','🌚'],['🍎','🍏'],['⭐','🌟'],['😊','🙂'],['🔵','🟦']];let sc=0,run=false,bad=0;
+  PN('جیاوازەکە بدۆزەرەوە','ئەو ئیمۆجییەی جیاوازە هەڵبژێرە. ٣٠ چرکەت هەیە.',TS('odd')+`<div class="xo" id="g"></div><button class="btn" id="go">دەستپێکردن</button>`);
+  const nx=()=>{const n=Math.min(2+Math.floor(sc/3),6),[a,b]=P[rnd(P.length)],g=$('#g');bad=rnd(n*n);g.style.gridTemplateColumns=`repeat(${n},1fr)`;g.style.maxWidth='340px';
+    g.innerHTML=Array.from({length:n*n},(_,i)=>`<button class="xc" data-i="${i}" style="font-size:${n>4?24:32}px">${i===bad?b:a}</button>`).join('');
+    app.querySelectorAll('.xc').forEach(c=>c.onclick=()=>{if(!run)return;if(+c.dataset.i===bad){sc++;set('a','خاڵ: '+ar(sc));buzz(15)}else buzz(80);nx()})};
+  $('#go').onclick=()=>{if(run)return;run=true;sc=0;nx();tmr(v,30,t=>set('b','کات: '+ar(t)),()=>{run=false;sv('odd',sc);$('#g').innerHTML='<p class="sub">کاتەکە تەواو بوو! '+ar(sc)+' جار دروستت دۆزییەوە.</p>';confetti()})};
+}
+function tf(){
+  const v=view;let sc=0,run=false,ok=1;
+  PN('ڕاستە یان هەڵە','٣٠ چرکەت هەیە؛ ئەنجامی هاوکێشەکە دروستە؟',TS('tf')+`<div id="q" style="font-size:40px;direction:ltr;margin:14px;font-weight:800;min-height:56px">؟</div><div class="slot"><button class="btn" id="y">ڕاستە ✓</button><button class="btn ghost" id="n">هەڵەیە ✗</button></div><p><button class="btn" id="go">دەستپێکردن</button></p>`);
+  const nx=()=>{const a=1+rnd(20),b=1+rnd(20),op=rnd(3),r=[a+b,a-b,a*b][op];ok=rnd(2);set('q',`${a} ${'+−×'[op]} ${b} = ${ok?r:r+(rnd(2)?1:-1)*(1+rnd(3))}`)};
+  const an=x=>{if(!run)return;if(x===ok){sc++;set('a','خاڵ: '+ar(sc));buzz(15)}else buzz(80);nx()};
+  $('#y').onclick=()=>an(1);$('#n').onclick=()=>an(0);
+  $('#go').onclick=()=>{if(run)return;run=true;sc=0;nx();tmr(v,30,t=>set('b','کات: '+ar(t)),()=>{run=false;sv('tf',sc);set('q','ئافەرین!');confetti()})};
+}
+
+/* ---------- confetti ---------- */
+const cv=$('#cv'),cx=cv.getContext('2d');let P=[],on=false;
+const fit=()=>{cv.width=innerWidth;cv.height=innerHeight};fit();addEventListener('resize',fit);
+function confetti(){
+  const col=['#7dd3fc','#38bdf8','#ffffff','#0ea5e9','#bae6fd'];
+  for(let i=0;i<100;i++)P.push({x:cv.width/2,y:cv.height*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,r:4+Math.random()*5,c:col[i%5],a:Math.random()*6,l:100+Math.random()*60});
+  if(!on){on=true;requestAnimationFrame(tick)}
+}
+function tick(){
+  cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l>0);
+  P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.vx*=.99;p.a+=.2;p.l--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore()});
+  if(P.length)requestAnimationFrame(tick);else{on=false;cx.clearRect(0,0,cv.width,cv.height)}
+}
+home();
+})();
+</script>
+</body>
+</html>
